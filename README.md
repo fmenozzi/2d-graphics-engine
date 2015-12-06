@@ -16,6 +16,8 @@ To buld, test, and produce sample images, use
     $ ./tests
     $ ./image -e expected
 
+(Requires `libpng` to build)
+
 Sample images created with the engine are shown below:
 
 ![alt tag](results/solid_ramp.png)
