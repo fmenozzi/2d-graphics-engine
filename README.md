@@ -68,6 +68,10 @@ Sample images created with the engine are shown below:
 
 ![alt tag](results/poly_shaders.png)
 
+![alt tag](results/lerp0.png)
+
+![alt tag](results/lerp1.png)
+
 ![alt tag](results/stroke_line.png)
 
 ![alt tag](results/stroke_polyline.png)
@@ -77,7 +81,3 @@ Sample images created with the engine are shown below:
 ![alt tag](results/stroke_rings.png)
 
 ![alt tag](results/stroke_star.png)
-
-![alt tag](results/lerp0.png)
-
-![alt tag](results/lerp1.png)
