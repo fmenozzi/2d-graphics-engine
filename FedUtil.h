@@ -16,6 +16,7 @@ class GPoint;
 namespace FedUtil {
     GPixel blend(GPixel src, GPixel dst);
     GPixel toPixel(const GColor& color);
+    GColor toColor(GPixel pixel);
 
     void mapRectToRect(const GRect& src, const GRect& dst, float res[9]);
 

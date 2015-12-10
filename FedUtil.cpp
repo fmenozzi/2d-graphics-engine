@@ -43,6 +43,15 @@ namespace FedUtil {
         return GPixel_PackARGB(a, r, g, b);
     }
 
+    GColor toColor(GPixel pixel) {
+        float a = GPixel_GetA(pixel) / 256.f;
+        float r = GPixel_GetR(pixel) / 256.f;
+        float g = GPixel_GetG(pixel) / 256.f;
+        float b = GPixel_GetB(pixel) / 256.f;
+
+        return GColor::MakeARGB(a,r,g,b);
+    }
+
     int numEdgesAfterClipping(GPoint p0, GPoint p1, int w) {
         int num_edges = 1;
         if (p0.x() < 0)

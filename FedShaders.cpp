@@ -8,6 +8,7 @@
 #include "FedBitmapShader.h"
 #include "FedLinearGradientShader.h"
 #include "FedRadialGradientShader.h"
+#include "FedLerpShader.h"
 
 class GShader;
 class GBitmap;
@@ -22,4 +23,8 @@ GShader* GShader::FromLinearGradient(const GPoint points[2], const GColor colors
 
 GShader* GShader::FromRadialGradient(const GPoint& center, float radius, const GColor colors[2]) {
     return new FedRadialGradientShader(center, radius, colors);
+}
+
+GShader* GShader::FromLerp(GShader* a, GShader* b, float t) {
+    return new FedLerpShader(a, b, t);
 }

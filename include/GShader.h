@@ -55,6 +55,8 @@ public:
      *  the parameters are not valid.
      */
     static GShader* FromRadialGradient(const GPoint& center, float radius, const GColor colors[2]);
+
+    static GShader* FromLerp(GShader* a, GShader* b, float t);
 };
 
 #endif
