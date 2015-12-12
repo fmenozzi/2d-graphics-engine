@@ -27,10 +27,10 @@ void FedLerpShader::shadeRow(int x, int y, int count, GPixel row[]) {
     m_b->shadeRow(x, y, count, brow);
 
     for (int i = 0; i < count; i++) {
-        GColor c0 = FedUtil::toColor(arow[i]);
-        GColor c1 = FedUtil::toColor(brow[i]);
+        GColor ca = FedUtil::toColor(arow[i]);
+        GColor cb = FedUtil::toColor(brow[i]);
     
-        GColor color = FedUtil::lerp(c0, t, c1);
+        GColor color = FedUtil::lerp(ca, t, cb);
 
         row[i] = FedUtil::toPixel(color);
 

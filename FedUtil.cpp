@@ -40,7 +40,7 @@ namespace FedUtil {
         unsigned g = (unsigned)(uc.fG * fA255);
         unsigned b = (unsigned)(uc.fB * fA255);
 
-        return GPixel_PackARGB(a, r, g, b);
+        return GPixel_PackARGB(a,r,g,b);
     }
 
     GColor toColor(GPixel pixel) {
