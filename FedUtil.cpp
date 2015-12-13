@@ -7,6 +7,7 @@
 #include <GPixel.h>
 #include <GColor.h>
 #include <GRect.h>
+#include <GBitmap.h>
 #include <GPoint.h>
 
 #include <algorithm>
@@ -40,7 +41,7 @@ namespace FedUtil {
         unsigned g = (unsigned)(uc.fG * fA255);
         unsigned b = (unsigned)(uc.fB * fA255);
 
-        return GPixel_PackARGB(a,r,g,b);
+        return GPixel_PackARGB(a, r, g, b);
     }
 
     GColor toColor(GPixel pixel) {
@@ -247,5 +248,66 @@ namespace FedUtil {
         res.fB = c0.fB*(1-t) + c1.fB*t;
 
         return res;
+    }
+
+    // TODO: slice should really be a GIRect
+    GBitmap bitmapSlice(const GBitmap& src, const GRect& slice) {
+        GBitmap res;
+
+        int w = slice.width();
+        int h = slice.height();
+
+        res.fWidth    = w;
+        res.fHeight   = h;
+        res.fRowBytes = w * sizeof(GPixel);
+        res.fPixels   = (GPixel*) malloc(w*h * sizeof(GPixel));
+
+        int i = 0;
+        for (int y = slice.top(); y < slice.bottom(); y++)
+            for (int x = slice.left(); x < slice.right(); x++)
+                res.fPixels[i++] = *src.getAddr(x,y);
+
+        return res;
+    }
+
+    void divideIntoNine(const GBitmap& src, const GIRect& center, const GRect& dst, GRect corners_lrtb_center[9]) {
+        int dstx = GRoundToInt(dst.x());
+        int dsty = GRoundToInt(dst.y());
+        int dstw = GRoundToInt(dst.width());
+        int dsth = GRoundToInt(dst.height());
+
+        int crw = center.x();
+        int crh = center.y();
+
+        int cx = dstx + crw;
+        int cy = dsty + crh;
+        int cw = dstw - (2*crw);
+        int ch = dsth - (2*crh);
+
+        GRect corners[4] = {
+            GRect::MakeXYWH(dstx,            dsty,            crw, crh),
+            GRect::MakeXYWH(dstx + crw + cw, dsty,            crw, crh),
+            GRect::MakeXYWH(dstx + crw + cw, dsty + crh + ch, crw, crh),
+            GRect::MakeXYWH(dstx,            dsty + crh + ch, crw, crh),
+        };
+        GRect lrtb[4] = {
+            GRect::MakeXYWH(dstx,            dsty + crh,      crw, ch),
+            GRect::MakeXYWH(dstx + crw + cw, dsty + crh,      crw, ch),
+            GRect::MakeXYWH(dstx + crw,      dsty,            cw,  crh),
+            GRect::MakeXYWH(dstx + crw,      dsty + crh + ch, cw,  crh),
+        };
+        GRect cntr = GRect::MakeXYWH(cx, cy, cw, ch);
+
+        corners_lrtb_center[0] = corners[0];
+        corners_lrtb_center[1] = corners[1];
+        corners_lrtb_center[2] = corners[2];
+        corners_lrtb_center[3] = corners[3];
+
+        corners_lrtb_center[4] = lrtb[0];
+        corners_lrtb_center[5] = lrtb[1];
+        corners_lrtb_center[6] = lrtb[2];
+        corners_lrtb_center[7] = lrtb[3];
+
+        corners_lrtb_center[8] = cntr;
     }
 }

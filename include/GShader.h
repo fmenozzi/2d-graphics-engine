@@ -56,6 +56,12 @@ public:
      */
     static GShader* FromRadialGradient(const GPoint& center, float radius, const GColor colors[2]);
 
+    /**
+     *  Return a new shader that returns the linear interpolation of colors returned by the
+     *  two other shaders a and b, with t applied as
+     *
+     *      colors_from_a * (1 - t) + colors_from_b * t
+     */
     static GShader* FromLerp(GShader* a, GShader* b, float t);
 };
 

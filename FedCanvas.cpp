@@ -28,6 +28,7 @@ public:
     void clear(const GColor& color) override;
     void fillRect(const GRect& rect, const GColor& color) override;
     void fillBitmapRect(const GBitmap& src, const GRect& dst) override;
+    void fillBitmapNine(const GBitmap& src, const GIRect& center, const GRect& dst) override;
     void fillConvexPolygon(const GPoint points[], int count, const GColor& color) override;
 
     void save() override;
@@ -95,6 +96,24 @@ void FedCanvas::fillBitmapRect(const GBitmap& src, const GRect& dst) {
     GShader* shader = GShader::FromBitmap(src, r2r.getFloats());
     fillPoly(points, 4, shader);
     delete shader;
+}
+
+void FedCanvas::fillBitmapNine(const GBitmap& src, const GIRect& center, const GRect& dst) {
+    GRect src_corners_lrtb_center[9];
+    FedUtil::divideIntoNine(src, center, GRect::MakeWH(src.width(), src.height()), src_corners_lrtb_center);
+
+    GRect dst_corners_lrtb_center[9];
+    FedUtil::divideIntoNine(src, center, dst, dst_corners_lrtb_center);
+
+    GBitmap corners_lrtb_center_slices[9];
+    for (int i = 0; i < 9; i++)
+        corners_lrtb_center_slices[i] = FedUtil::bitmapSlice(src, src_corners_lrtb_center[i]);
+
+    for (int i = 0; i < 9; i++)
+        fillBitmapRect(corners_lrtb_center_slices[i], dst_corners_lrtb_center[i]);
+
+    for (int i = 0; i < 9; i++)
+        free(corners_lrtb_center_slices[i].fPixels);
 }
 
 void FedCanvas::fillPoly(const GPoint points[], int count, GShader* shader) {

@@ -11,6 +11,8 @@
 
 class GColor;
 class GRect;
+class GIRect;
+class GBitmap;
 class GPoint;
 
 namespace FedUtil {
@@ -40,6 +42,10 @@ namespace FedUtil {
         return std::max(min, std::min(value, max));
     }
     GColor lerp(const GColor& c0, float t, const GColor& c1);
+
+    GBitmap bitmapSlice(const GBitmap& src, const GRect& slice);
+    void divideIntoNine(const GBitmap& src, const GIRect& center, const GRect& dst, GRect corners_lrtb_center[9]);
+
 }
 
 #endif

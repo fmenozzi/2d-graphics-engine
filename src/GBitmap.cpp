@@ -182,7 +182,7 @@ bool GBitmap::readFromFile(const char path[]) {
         png_destroy_read_struct(&png_ptr, NULL, NULL);
         return always_false();
     }
-    
+
     GAutoPNGReader reader(png_ptr, info_ptr);
     
     if (setjmp(png_jmpbuf(png_ptr))) {
@@ -197,6 +197,11 @@ bool GBitmap::readFromFile(const char path[]) {
     int bitDepth, colorType;
     png_get_IHDR(png_ptr, info_ptr, &width, &height, &bitDepth, &colorType,
                  NULL, NULL, NULL);
+
+    if (colorType == PNG_COLOR_TYPE_PALETTE) {
+        png_set_palette_to_rgb(png_ptr);
+        colorType &= ~PNG_COLOR_MASK_PALETTE;
+    }
 
     if (8 != bitDepth) {
         return always_false();   // TODO: handle other formats

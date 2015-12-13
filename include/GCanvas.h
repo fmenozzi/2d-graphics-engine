@@ -9,6 +9,7 @@
 
 class GBitmap;
 class GColor;
+class GIRect;
 class GPoint;
 class GRect;
 class GShader;
@@ -147,6 +148,33 @@ public:
      *  and those end-caps should reflect the Stroke.fAddCap setting.
      */
     virtual void strokePolygon(const GPoint[], int n, bool isClosed, const Stroke&, GShader*) = 0;
+
+    /**
+     *  The bitmap is logically divided into 9 sections, with the middle specifed using the
+     *  center rect (which encloses section 4 (see below).
+     *
+     *  -------------               ---------------------------------
+     *  | 0 | 1 | 2 |               | 0 |           1           | 2 |
+     *  -------------               ---------------------------------
+     *  | 3 | 4 | 5 |  bm   -->     |   |                       |   |
+     *  -------------               | 3 |           4           | 5 |  dst
+     *  | 6 | 7 | 8 |               |   |                       |   |
+     *  -------------               ---------------------------------
+     *                              | 6 |           7           | 8 |
+     *                              ---------------------------------
+     *
+     *  This method stretches each section of the bitmap such that the entire dst rect is filled,
+     *  but each section is stretched/positioned differently:
+     *  - The corners sections (0, 2, 6, 8) are not stretched, but positioned to land in the
+     *      corners of the dst rect.
+     *  - The top/bottom sections (1, 7) are only stretched horizontally to fill any space left in
+     *      the dst rect between their corners.
+     *  - The side sections (3, 5) are only stretched vertically to fill any space left in
+     *      the dst rect between their corners.
+     *  - The center section (4) is stretched in both directions to fill the remaing space between
+     *      the stretched sides and top/bottom sections.
+     */
+    virtual void fillBitmapNine(const GBitmap& bm, const GIRect& center, const GRect& dst) {}
 };
 
 #endif
