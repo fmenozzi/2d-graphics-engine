@@ -32,6 +32,10 @@ Sample images created with the engine are shown below:
 
 ![alt tag](results/spocks_zoom.png) 
 
+![alt tag](results/nine0.png)
+
+![alt tag](results/nine1.png)
+
 ![alt tag](results/circles_fat.png)
 
 ![alt tag](results/tri.png)
