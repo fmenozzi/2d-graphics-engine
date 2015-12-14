@@ -254,18 +254,10 @@ namespace FedUtil {
     GBitmap bitmapSlice(const GBitmap& src, const GRect& slice) {
         GBitmap res;
 
-        int w = slice.width();
-        int h = slice.height();
-
-        res.fWidth    = w;
-        res.fHeight   = h;
-        res.fRowBytes = w * sizeof(GPixel);
-        res.fPixels   = (GPixel*) malloc(w*h * sizeof(GPixel));
-
-        int i = 0;
-        for (int y = slice.top(); y < slice.bottom(); y++)
-            for (int x = slice.left(); x < slice.right(); x++)
-                res.fPixels[i++] = *src.getAddr(x,y);
+        res.fWidth    = slice.width();
+        res.fHeight   = slice.height();
+        res.fRowBytes = src.rowBytes();
+        res.fPixels   = src.getAddr(slice.x(), slice.y());
 
         return res;
     }

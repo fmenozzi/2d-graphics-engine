@@ -111,9 +111,6 @@ void FedCanvas::fillBitmapNine(const GBitmap& src, const GIRect& center, const G
 
     for (int i = 0; i < 9; i++)
         fillBitmapRect(corners_lrtb_center_slices[i], dst_corners_lrtb_center[i]);
-
-    for (int i = 0; i < 9; i++)
-        free(corners_lrtb_center_slices[i].fPixels);
 }
 
 void FedCanvas::fillPoly(const GPoint points[], int count, GShader* shader) {
