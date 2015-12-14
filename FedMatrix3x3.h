@@ -17,7 +17,7 @@ public:
         m_mat[4] = 1;
         m_mat[5] = 0;
     }
-    FedMatrix3x3(const float mat[6]) {
+    explicit FedMatrix3x3(const float mat[6]) {
         for (int i = 0; i < 6; i++)
             m_mat[i] = mat[i];
     }

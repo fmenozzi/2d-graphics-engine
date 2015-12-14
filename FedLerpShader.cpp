@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015 Federico Menozzi
+ */
+
 #include "FedLerpShader.h"
 
 #include <GColor.h>

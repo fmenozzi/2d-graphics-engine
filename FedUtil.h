@@ -5,6 +5,8 @@
 #ifndef FedUtil_DEFINED
 #define FedUtil_DEFINED
 
+#include <algorithm>
+
 #include <GPixel.h>
 
 #include "FedMatrix3x3.h"

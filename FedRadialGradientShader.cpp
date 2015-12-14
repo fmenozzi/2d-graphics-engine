@@ -1,3 +1,7 @@
+/*
+ * Copyright (2015) Federico Menozzi
+ */
+
 #include "FedRadialGradientShader.h"
 #include "FedUtil.h"
 

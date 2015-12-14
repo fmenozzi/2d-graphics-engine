@@ -18,7 +18,7 @@
 
 class FedCanvas : public GCanvas {
 public:
-    FedCanvas(const GBitmap& bitmap) {
+    explicit FedCanvas(const GBitmap& bitmap) {
         m_bitmap = bitmap;
         m_ctms   = std::stack<FedMatrix3x3>();
 
