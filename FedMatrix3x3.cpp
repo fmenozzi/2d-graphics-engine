@@ -14,7 +14,7 @@ GPoint FedMatrix3x3::apply(const GPoint& point) const {
     float xp = a*x + b*y + c;
     float yp = d*x + e*y + f;
 
-    return GPoint::Make(xp,yp);
+    return GPoint::Make(xp, yp);
 }
 
 void FedMatrix3x3::apply(const GPoint points[], int count, GPoint xform_points[]) const {

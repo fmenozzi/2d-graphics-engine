@@ -2,8 +2,8 @@
  * Copyright 2015 Federico Menozzi
  */
 
-#ifndef FedLerpShader_DEFINED
-#define FedLerpShader_DEFINED
+#ifndef FEDLERPSHADER_H_
+#define FEDLERPSHADER_H_
 
 #include <GShader.h>
 #include <GPixel.h>
@@ -33,4 +33,4 @@ private:
     FedMatrix3x3 m_xform;
 };
 
-#endif
+#endif  // FEDLERPSHADER_H_

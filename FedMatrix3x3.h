@@ -2,8 +2,8 @@
  * Copyright 2015 Federico Menozzi
  */
 
-#ifndef FedMatrix3x3_DEFINED
-#define FedMatrix3x3_DEFINED
+#ifndef FEDMATRIX3X3_H_
+#define FEDMATRIX3X3_H_
 
 #include <GPoint.h>
 
@@ -41,4 +41,4 @@ private:
     float m_mat[6];
 };
 
-#endif
+#endif  // FEDMATRIX3X3_H_

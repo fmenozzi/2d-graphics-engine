@@ -2,8 +2,8 @@
  * Copyright 2015 Federico Menozzi
  */
 
-#ifndef FedRadialGradientShader_DEFINED
-#define FedRadialGradientShader_DEFINED
+#ifndef FEDRADIALGRADIENTSHADER_H_
+#define FEDRADIALGRADIENTSHADER_H_
 
 #include <GShader.h>
 #include <GPoint.h>
@@ -32,4 +32,4 @@ private:
     FedMatrix3x3 m_xform;
 };
 
-#endif
+#endif  // FEDRADIALGRADIENTSHADER_H_

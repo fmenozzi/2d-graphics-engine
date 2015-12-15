@@ -2,8 +2,8 @@
  * Copyright 2015 Federico Menozzi
  */
 
-#ifndef FedBitmapShader_DEFINED
-#define FedBitmapShader_DEFINED
+#ifndef FEDBITMAPSHADER_H_
+#define FEDBITMAPSHADER_H_
 
 #include <GShader.h>
 #include <GBitmap.h>
@@ -29,4 +29,4 @@ private:
     FedMatrix3x3 m_xform;
 };
 
-#endif
+#endif  // FEDBITMAPSHADER_H_

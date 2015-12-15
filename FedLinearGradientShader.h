@@ -2,8 +2,8 @@
  * Copyright 2015 Federico Menozzi
  */
 
-#ifndef FedLinearGradientShader_DEFINED
-#define FedLinearGradientShader_DEFINED
+#ifndef FEDLINEARGRADIENTSHADER_H_
+#define FEDLINEARGRADIENTSHADER_H_
 
 #include <GShader.h>
 #include <GPoint.h>
@@ -29,4 +29,4 @@ private:
     float m_D;
 };
 
-#endif
+#endif  // FEDLINEARGRADIENTSHADER_H_

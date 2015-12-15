@@ -2,8 +2,8 @@
  * Copyright 2015 Federico Menozzi
  */
 
-#ifndef FedVector2_DEFINED
-#define FedVector2_DEFINED
+#ifndef FEDVECTOR2_H_
+#define FEDVECTOR2_H_
 
 #include <GPoint.h>
 
@@ -94,4 +94,4 @@ GPoint operator-(const GPoint& p, const FedVector2& v) {
     return GPoint::Make(p.x() - v.v0(), p.y() - v.v1());
 }
 
-#endif
+#endif  // FEDVECTOR2_H_

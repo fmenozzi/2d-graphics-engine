@@ -39,6 +39,7 @@ public:
     void shadeConvexPolygon(const GPoint points[], int count, GShader* shader) override;
 
     void strokePolygon(const GPoint points[], int count, bool isClosed, const Stroke& stroke, GShader* shader) override;
+
 private:
     GBitmap m_bitmap;
     std::stack<FedMatrix3x3> m_ctms;
@@ -228,7 +229,7 @@ void FedCanvas::strokePolygon(const GPoint points[], int count, bool isClosed, c
         GPoint B = points[j];
         GPoint C = points[k];
 
-        FedVector2 AB(A,B);
+        FedVector2 AB(A, B);
 
         FedVector2 AB_scaled = AB.scaled(mag);
 
@@ -250,8 +251,8 @@ void FedCanvas::strokePolygon(const GPoint points[], int count, bool isClosed, c
         }
         shadeConvexPolygon(shell, 4, shader);
 
-        FedVector2 BC(B,C);
-        FedVector2 BA(B,A);
+        FedVector2 BC(B, C);
+        FedVector2 BA(B, A);
 
         GPoint Q = shell[3];
         GPoint R = B + BC.scaled(mag).rotate90ccw();
@@ -261,8 +262,8 @@ void FedCanvas::strokePolygon(const GPoint points[], int count, bool isClosed, c
         joint[1] = B;
         joint[2] = R;
 
-        FedVector2 BQ(B,Q);
-        FedVector2 BR(B,R);
+        FedVector2 BQ(B, Q);
+        FedVector2 BR(B, R);
 
         float sgn = BA.crossmag(BC);
         if (sgn > 0) {
