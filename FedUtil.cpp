@@ -277,31 +277,20 @@ void divideIntoNine(const GBitmap& src, const GIRect& center, const GRect& dst, 
     int cw = dstw - (2*crw);
     int ch = dsth - (2*crh);
 
-    GRect corners[4] = {
-        GRect::MakeXYWH(dstx,            dsty,            crw, crh),
-        GRect::MakeXYWH(dstx + crw + cw, dsty,            crw, crh),
-        GRect::MakeXYWH(dstx + crw + cw, dsty + crh + ch, crw, crh),
-        GRect::MakeXYWH(dstx,            dsty + crh + ch, crw, crh),
-    };
-    GRect lrtb[4] = {
-        GRect::MakeXYWH(dstx,            dsty + crh,      crw, ch),
-        GRect::MakeXYWH(dstx + crw + cw, dsty + crh,      crw, ch),
-        GRect::MakeXYWH(dstx + crw,      dsty,            cw,  crh),
-        GRect::MakeXYWH(dstx + crw,      dsty + crh + ch, cw,  crh),
-    };
-    GRect cntr = GRect::MakeXYWH(cx, cy, cw, ch);
+    // Corners
+    corners_lrtb_center[0] = GRect::MakeXYWH(dstx,            dsty,            crw, crh);
+    corners_lrtb_center[1] = GRect::MakeXYWH(dstx + crw + cw, dsty,            crw, crh);
+    corners_lrtb_center[2] = GRect::MakeXYWH(dstx + crw + cw, dsty + crh + ch, crw, crh);
+    corners_lrtb_center[3] = GRect::MakeXYWH(dstx,            dsty + crh + ch, crw, crh);
 
-    corners_lrtb_center[0] = corners[0];
-    corners_lrtb_center[1] = corners[1];
-    corners_lrtb_center[2] = corners[2];
-    corners_lrtb_center[3] = corners[3];
+    // LRTB
+    corners_lrtb_center[4] = GRect::MakeXYWH(dstx,            dsty + crh,      crw, ch);
+    corners_lrtb_center[5] = GRect::MakeXYWH(dstx + crw + cw, dsty + crh,      crw, ch);
+    corners_lrtb_center[6] = GRect::MakeXYWH(dstx + crw,      dsty,            cw,  crh);
+    corners_lrtb_center[7] = GRect::MakeXYWH(dstx + crw,      dsty + crh + ch, cw,  crh);
 
-    corners_lrtb_center[4] = lrtb[0];
-    corners_lrtb_center[5] = lrtb[1];
-    corners_lrtb_center[6] = lrtb[2];
-    corners_lrtb_center[7] = lrtb[3];
-
-    corners_lrtb_center[8] = cntr;
+    // Center
+    corners_lrtb_center[8] = GRect::MakeXYWH(cx, cy, cw, ch);
 }
 
 }  // namespace FedUtil
