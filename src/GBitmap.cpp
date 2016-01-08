@@ -130,13 +130,13 @@ static void swizzle_rgb_row(GPixel dst[], const uint8_t src[], int count) {
     }
 }
 
-static int alpha_mul(unsigned a, unsigned c) {
+static int alpha_mul(uint8_t a, uint8_t c) {
     return (a * c + 127) / 255;
 }
 
 static void swizzle_rgba_row(GPixel dst[], const uint8_t src[], int count) {
     for (int i = 0; i < count; ++i) {
-        unsigned a = src[3];
+        uint8_t a = src[3];
         dst[i] = GPixel_PackARGB(a,
                                  alpha_mul(a, src[0]),
                                  alpha_mul(a, src[1]),

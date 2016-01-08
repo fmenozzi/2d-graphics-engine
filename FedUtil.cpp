@@ -17,17 +17,17 @@ namespace FedUtil {
 GPixel blend(GPixel src, GPixel dst) {
     static constexpr int magic = (1<<16) | (1<<8) | 1;
 
-    unsigned dstA = GPixel_GetA(dst), srcA = GPixel_GetA(src);
-    unsigned dstR = GPixel_GetR(dst), srcR = GPixel_GetR(src);
-    unsigned dstG = GPixel_GetG(dst), srcG = GPixel_GetG(src);
-    unsigned dstB = GPixel_GetB(dst), srcB = GPixel_GetB(src);
+    uint8_t dstA = GPixel_GetA(dst), srcA = GPixel_GetA(src);
+    uint8_t dstR = GPixel_GetR(dst), srcR = GPixel_GetR(src);
+    uint8_t dstG = GPixel_GetG(dst), srcG = GPixel_GetG(src);
+    uint8_t dstB = GPixel_GetB(dst), srcB = GPixel_GetB(src);
 
-    unsigned sub = 255-srcA;
+    uint8_t sub = 255-srcA;
 
-    unsigned finalA = srcA + (((sub * dstA * magic) + (1<<23)) >> 24);
-    unsigned finalR = srcR + (((sub * dstR * magic) + (1<<23)) >> 24);
-    unsigned finalG = srcG + (((sub * dstG * magic) + (1<<23)) >> 24);
-    unsigned finalB = srcB + (((sub * dstB * magic) + (1<<23)) >> 24);
+    uint8_t finalA = srcA + (((sub * dstA * magic) + (1<<23)) >> 24);
+    uint8_t finalR = srcR + (((sub * dstR * magic) + (1<<23)) >> 24);
+    uint8_t finalG = srcG + (((sub * dstG * magic) + (1<<23)) >> 24);
+    uint8_t finalB = srcB + (((sub * dstB * magic) + (1<<23)) >> 24);
 
     return GPixel_PackARGB(finalA, finalR, finalG, finalB);
 }
@@ -37,10 +37,10 @@ GPixel toPixel(const GColor& color) {
 
     float fA255 = uc.fA * 255.9999f;
 
-    unsigned a = (unsigned)(fA255);
-    unsigned r = (unsigned)(uc.fR * fA255);
-    unsigned g = (unsigned)(uc.fG * fA255);
-    unsigned b = (unsigned)(uc.fB * fA255);
+    uint8_t a = (uint8_t)(fA255);
+    uint8_t r = (uint8_t)(uc.fR * fA255);
+    uint8_t g = (uint8_t)(uc.fG * fA255);
+    uint8_t b = (uint8_t)(uc.fB * fA255);
 
     return GPixel_PackARGB(a, r, g, b);
 }

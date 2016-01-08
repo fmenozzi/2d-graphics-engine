@@ -29,7 +29,7 @@ static inline int GPixel_GetB(GPixel p) { return (p >> GPIXEL_SHIFT_B) & 0xFF; }
  *  Asserts that a, r, g, b are already in premultiply form, and simiply
  *  packs them into a GPixel.
  */
-static inline GPixel GPixel_PackARGB(unsigned a, unsigned r, unsigned g, unsigned b) {
+static inline GPixel GPixel_PackARGB(uint8_t a, uint8_t r, uint8_t g, uint8_t b) {
     GASSERT(a <= 255);
     GASSERT(r <= a);
     GASSERT(g <= a);
