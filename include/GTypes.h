@@ -12,8 +12,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-static inline void g_crash() {
-    fprintf(stderr, "g_crash called\n");
+static inline void g_crash(const char* msg) {
+    fprintf(stderr, "g_crash called: %s\n", msg);
     *(int*)0x50FF8001 = 12345;
 }
 
@@ -23,7 +23,7 @@ static inline void g_crash() {
     #define GDEBUGCODE(code)
 #else
     #define GDEBUG
-    #define GASSERT(pred)       do { if (!(pred)) g_crash(); } while (0)
+    #define GASSERT(pred, msg)  do { if (!(pred)) g_crash(msg); } while (0)
     #define GDEBUGCODE(code)    code
 #endif
 

@@ -568,13 +568,13 @@ protected:
 
 private:
     void removeShape(Shape* target) {
-        GASSERT(target);
+        GASSERT(target, "removeShape(): target is null");
 
         std::vector<Shape*>::iterator it = std::find(fList.begin(), fList.end(), target);
         if (it != fList.end()) {
             fList.erase(it);
         } else {
-            GASSERT(!"shape not found?");
+            GASSERT(false, "removeShape(): shape not found");
         }
     }
 

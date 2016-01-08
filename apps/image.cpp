@@ -41,8 +41,8 @@ static int pixel_diff(GPixel p0, GPixel p1) {
 }
 
 static double compare(const GBitmap& a, const GBitmap& b, int tolerance, bool verbose) {
-    GASSERT(a.width() == b.width());
-    GASSERT(a.height() == b.height());
+    GASSERT(a.width() == b.width(),   "compare(): bitmap widths do not match");
+    GASSERT(a.height() == b.height(), "compare(): bitmap heights do not match");
 
     const int total = a.width() * a.height() * 255;
 
@@ -81,8 +81,8 @@ static void setup_bitmap(GBitmap* bitmap, int w, int h) {
 }
 
 static GPixel* get_addr(const GBitmap& bm, int x, int y) {
-    GASSERT(x >= 0 && x < bm.width());
-    GASSERT(y >= 0 && y < bm.height());
+    GASSERT(x >= 0 && x < bm.width(),  "get_addr(): x is not in range");
+    GASSERT(y >= 0 && y < bm.height(), "get_addr(): y is not in range");
     return bm.pixels() + x + y * (bm.rowBytes() >> 2);
 }
 
@@ -190,7 +190,7 @@ int main(int argc, char** argv) {
             expected = argv[++i];
         } else if (is_arg(argv[i], "tolerance") && i+1 < argc) {
             tolerance = atoi(argv[++i]);
-            GASSERT(tolerance >= 0);
+            GASSERT(tolerance >= 0, "main(): tolerance should be non-negative");
         } else if (is_arg(argv[i], "diff") && i+1 < argc) {
             diffDir = argv[++i];
             std::string path(diffDir);

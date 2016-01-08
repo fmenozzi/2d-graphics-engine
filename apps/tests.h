@@ -56,7 +56,7 @@ private:
             printf("tests: %s: %s\n", msg, success ? "passed" : "failed");
         }
         if (gTestSuite_CrashOnFailure) {
-            GASSERT(false);
+            GASSERT(false, "didTest(): gTestSuite_CrashOnFailure");
         }
     }
 };

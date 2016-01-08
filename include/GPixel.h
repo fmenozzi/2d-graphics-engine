@@ -30,10 +30,10 @@ static inline int GPixel_GetB(GPixel p) { return (p >> GPIXEL_SHIFT_B) & 0xFF; }
  *  packs them into a GPixel.
  */
 static inline GPixel GPixel_PackARGB(uint8_t a, uint8_t r, uint8_t g, uint8_t b) {
-    GASSERT(a <= 255);
-    GASSERT(r <= a);
-    GASSERT(g <= a);
-    GASSERT(b <= a);
+    GASSERT(a <= 255, "GPixel_PackARGB(): a is more than 255");
+    GASSERT(r <= a,   "GPixel_PackARGB(): r is greater than a");
+    GASSERT(g <= a,   "GPixel_PackARGB(): g is greater than a");
+    GASSERT(b <= a,   "GPixel_PackARGB(): b is greater than a");
     
     return  (a << GPIXEL_SHIFT_A) |
             (r << GPIXEL_SHIFT_R) |

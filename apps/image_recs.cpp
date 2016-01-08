@@ -379,7 +379,7 @@ class ColorsDrawable : public Drawable {
 
 public:
     ColorsDrawable(const GColor colors[], int count) : fColors(colors) {
-        GASSERT(count <= GARRAY_COUNT(fPts));
+        GASSERT(count <= GARRAY_COUNT(fPts), "ColorsDrawable::ColorsDrawable(): count is greater than array elements");
         make_regular_poly(fPts, count, 0, 0, DRAW_CONCAT_W/5);
         fCount = count;
     }

@@ -27,7 +27,7 @@ public:
     }
 
     int nextRange(int min, int max) {
-        GASSERT(max >= min);
+        GASSERT(max >= min, "nextRange(): max is less than min");
         return min + this->nextU() % (max - min + 1);
     }
 

@@ -27,8 +27,8 @@ public:
     size_t  fRowBytes;
 
     GPixel* getAddr(int x, int y) const {
-        GASSERT(x >= 0 && x < this->width());
-        GASSERT(y >= 0 && y < this->height());
+        GASSERT(x >= 0 && x < this->width(),  "getAddr(): x is not in range");
+        GASSERT(y >= 0 && y < this->height(), "getAddr(): y is not in range");
         return this->pixels() + x + (y * this->rowBytes() >> 2);
     }
 
