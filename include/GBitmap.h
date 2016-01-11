@@ -10,12 +10,6 @@
 class GBitmap {
 public:
     GBitmap() {}
-    GBitmap(int w, int h) {
-        fWidth    = w;
-        fHeight   = h;
-        fRowBytes = w * sizeof(GPixel);
-        fPixels   = (GPixel*)calloc(fRowBytes, h);
-    }
 
     int width() const { return fWidth; }
     int height() const { return fHeight; }
