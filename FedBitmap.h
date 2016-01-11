@@ -17,6 +17,9 @@ public:
         fRowBytes = w * sizeof(GPixel);
         fPixels   = (GPixel*)calloc(fRowBytes, h);
     }
+    FedBitmap(const std::string& path) {
+        readFromFile(path.c_str());
+    }
 
     ~FedBitmap() {
         if (fPixels)
