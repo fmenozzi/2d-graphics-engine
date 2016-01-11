@@ -2,8 +2,8 @@
  * Copyright 2015 Federico Menozzi
  */
 
-#ifndef
-#define
+#ifndef FEDBITMAP_H_
+#define FEDBITMAP_H_
 
 #include <GBitmap.h>
 #include <GPixel.h>
