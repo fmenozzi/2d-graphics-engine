@@ -22,6 +22,6 @@ public:
         if (fPixels)
             free(fPixels);
     }
-}
+};
 
 #endif
