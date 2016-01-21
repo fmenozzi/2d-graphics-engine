@@ -19,7 +19,7 @@ static inline void g_crash(const char* msg) {
 
 #ifdef NDEBUG
     #define GRELEASE
-    #define GASSERT(pred)
+    #define GASSERT(pred, msg)
     #define GDEBUGCODE(code)
 #else
     #define GDEBUG
