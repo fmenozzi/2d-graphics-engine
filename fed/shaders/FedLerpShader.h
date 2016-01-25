@@ -8,8 +8,8 @@
 #include <GShader.h>
 #include <GPixel.h>
 
-#include "FedMatrix3x3.h"
-#include "FedUtil.h"
+#include <FedMatrix3x3.h>
+#include <FedUtil.h>
 
 class FedLerpShader : public GShader {
 public:

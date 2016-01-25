@@ -2,7 +2,7 @@
  * Copyright 2015 Federico Menozzi
  */
 
-#include "FedMatrix3x3.h"
+#include <FedMatrix3x3.h>
 
 GPoint FedMatrix3x3::apply(const GPoint& point) const {
     float a = m_mat[0], b = m_mat[1], c = m_mat[2];

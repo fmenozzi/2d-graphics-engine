@@ -8,7 +8,7 @@
 #include <GShader.h>
 #include <GBitmap.h>
 
-#include "FedMatrix3x3.h"
+#include <FedMatrix3x3.h>
 
 class FedBitmapShader : public GShader {
 public:

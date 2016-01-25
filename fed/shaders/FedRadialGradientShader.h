@@ -9,7 +9,7 @@
 #include <GPoint.h>
 #include <GColor.h>
 
-#include "FedMatrix3x3.h"
+#include <FedMatrix3x3.h>
 
 class FedRadialGradientShader : public GShader {
 public:

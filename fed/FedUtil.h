@@ -9,7 +9,7 @@
 
 #include <GPixel.h>
 
-#include "FedMatrix3x3.h"
+#include <FedMatrix3x3.h>
 
 class GColor;
 class GRect;

@@ -1,5 +1,5 @@
 An engine for producing 2D graphics as produced over the course of the semester in my university graphics course. All code
-with the `Fed` prefix is mine, while everything else was provided by the instructor. All instructor-provided code is untouched up to and including commit `560eee`. Commits after this point include changes to this code.
+in the `fed` directory (i.e. with the `Fed` prefix) is mine, while everything else was provided by the instructor. All instructor-provided code is untouched up to and including commit `560eee`. Commits after this point include changes to this code.
 
 Features of the engine include:
 

@@ -3,11 +3,11 @@ CC = g++ -g -std=c++11 -pedantic
 CC_DEBUG = @$(CC) -pedantic
 CC_RELEASE = @$(CC) -O3 -DNDEBUG
 
-G_SRC = src/*.cpp *.cpp
+G_SRC = src/*.cpp fed/*.cpp fed/shaders/*.cpp
 
 # need libpng to build
 #
-G_INC = -Iinclude -Iapps -I/opt/local/include -L/opt/local/lib
+G_INC = -Iinclude -Iapps -I/opt/local/include -L/opt/local/lib -Ifed -Ifed/shaders
 
 all: image tests
 

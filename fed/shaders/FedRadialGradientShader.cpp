@@ -2,8 +2,8 @@
  * Copyright (2015) Federico Menozzi
  */
 
-#include "FedRadialGradientShader.h"
-#include "FedUtil.h"
+#include <FedRadialGradientShader.h>
+#include <FedUtil.h>
 
 bool FedRadialGradientShader::setContext(const float ctm[6]) {
     float r  = m_radius;

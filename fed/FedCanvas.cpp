@@ -12,9 +12,9 @@
 #include <algorithm>
 #include <stack>
 
-#include "FedUtil.h"
-#include "FedMatrix3x3.h"
-#include "FedVector2.h"
+#include <FedUtil.h>
+#include <FedMatrix3x3.h>
+#include <FedVector2.h>
 
 class FedCanvas : public GCanvas {
 public:

@@ -5,10 +5,10 @@
 #include <GPoint.h>
 #include <GColor.h>
 
-#include "FedBitmapShader.h"
-#include "FedLinearGradientShader.h"
-#include "FedRadialGradientShader.h"
-#include "FedLerpShader.h"
+#include <FedBitmapShader.h>
+#include <FedLinearGradientShader.h>
+#include <FedRadialGradientShader.h>
+#include <FedLerpShader.h>
 
 class GShader;
 class GBitmap;

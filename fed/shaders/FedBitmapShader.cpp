@@ -2,8 +2,8 @@
  * Copyright 2015 Federico Menozzi
  */
 
-#include "FedBitmapShader.h"
-#include "FedUtil.h"
+#include <FedBitmapShader.h>
+#include <FedUtil.h>
 
 void FedBitmapShader::shadeRow(int x, int y, int count, GPixel row[]) {
     GPoint start  = GPoint::Make(x+0.5, y+0.5);

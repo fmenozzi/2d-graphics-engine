@@ -2,8 +2,8 @@
  * Copyright (2015) Federico Menozzi
  */
 
-#include "FedLinearGradientShader.h"
-#include "FedUtil.h"
+#include <FedLinearGradientShader.h>
+#include <FedUtil.h>
 
 FedLinearGradientShader::FedLinearGradientShader(const GPoint points[2], const GColor colors[2]) {
     m_points[0] = points[0];
