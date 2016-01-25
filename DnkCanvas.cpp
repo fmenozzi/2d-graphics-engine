@@ -12,17 +12,17 @@
 #include <algorithm>
 #include <stack>
 
-#include "FedUtil.h"
-#include "FedMatrix3x3.h"
-#include "FedVector2.h"
+#include "DnkUtil.h"
+#include "DnkMatrix3x3.h"
+#include "DnkVector2.h"
 
-class FedCanvas : public GCanvas {
+class DnkCanvas : public GCanvas {
 public:
-    explicit FedCanvas(const GBitmap& bitmap) {
+    explicit DnkCanvas(const GBitmap& bitmap) {
         m_bitmap = bitmap;
-        m_ctms   = std::stack<FedMatrix3x3>();
+        m_ctms   = std::stack<DnkMatrix3x3>();
 
-        m_ctms.push(FedMatrix3x3());
+        m_ctms.push(DnkMatrix3x3());
     }
 
     void clear(const GColor& color) override;
@@ -42,10 +42,10 @@ public:
 
 private:
     GBitmap m_bitmap;
-    std::stack<FedMatrix3x3> m_ctms;
+    std::stack<DnkMatrix3x3> m_ctms;
 
     void fillPoly(const GPoint points[], int count, GShader* shader);
-    FedMatrix3x3& getCTM();
+    DnkMatrix3x3& getCTM();
 };
 
 GCanvas* GCanvas::Create(const GBitmap& bitmap) {
@@ -54,11 +54,11 @@ GCanvas* GCanvas::Create(const GBitmap& bitmap) {
         || bitmap.rowBytes() < bitmap.width() * sizeof(GPixel)
         || bitmap.pixels() == NULL)
         return NULL;
-    return new FedCanvas(bitmap);
+    return new DnkCanvas(bitmap);
 }
 
-void FedCanvas::clear(const GColor& color) {
-    GPixel srcpx = FedUtil::toPixel(color);
+void DnkCanvas::clear(const GColor& color) {
+    GPixel srcpx = DnkUtil::toPixel(color);
 
     int w  = m_bitmap.width();
     int h  = m_bitmap.height();
@@ -73,53 +73,53 @@ void FedCanvas::clear(const GColor& color) {
     }
 }
 
-void FedCanvas::fillRect(const GRect& rect, const GColor& color) {
+void DnkCanvas::fillRect(const GRect& rect, const GColor& color) {
     // TODO: Add non-rotated rect optimization
     if (!rect.isEmpty()) {
         GPoint pts[4];
-        FedUtil::convertToQuad(rect, pts);
+        DnkUtil::convertToQuad(rect, pts);
         fillConvexPolygon(pts, 4, color);
     }
 }
 
-void FedCanvas::fillBitmapRect(const GBitmap& src, const GRect& dst) {
+void DnkCanvas::fillBitmapRect(const GBitmap& src, const GRect& dst) {
     GIRect roi = GIRect::MakeWH(m_bitmap.width(), m_bitmap.height());
     if (!roi.intersect(dst.round()))
         return;
 
     GPoint points[4];
-    FedUtil::convertToQuad(dst, points);
+    DnkUtil::convertToQuad(dst, points);
 
     GRect srcrect = GRect::MakeWH(src.width(), src.height());
 
-    FedMatrix3x3 r2r = FedUtil::mapRectToRectMat(srcrect, dst);
+    DnkMatrix3x3 r2r = DnkUtil::mapRectToRectMat(srcrect, dst);
 
     GShader* shader = GShader::FromBitmap(src, r2r.getFloats());
     fillPoly(points, 4, shader);
     delete shader;
 }
 
-void FedCanvas::fillBitmapNine(const GBitmap& src, const GIRect& center, const GRect& dst) {
+void DnkCanvas::fillBitmapNine(const GBitmap& src, const GIRect& center, const GRect& dst) {
     GRect src_corners_lrtb_center[9];
-    FedUtil::divideIntoNine(src, center, GRect::MakeWH(src.width(), src.height()), src_corners_lrtb_center);
+    DnkUtil::divideIntoNine(src, center, GRect::MakeWH(src.width(), src.height()), src_corners_lrtb_center);
 
     GRect dst_corners_lrtb_center[9];
-    FedUtil::divideIntoNine(src, center, dst, dst_corners_lrtb_center);
+    DnkUtil::divideIntoNine(src, center, dst, dst_corners_lrtb_center);
 
     GBitmap corners_lrtb_center_slices[9];
     for (int i = 0; i < 9; i++)
-        corners_lrtb_center_slices[i] = FedUtil::bitmapSlice(src, src_corners_lrtb_center[i]);
+        corners_lrtb_center_slices[i] = DnkUtil::bitmapSlice(src, src_corners_lrtb_center[i]);
 
     for (int i = 0; i < 9; i++)
         fillBitmapRect(corners_lrtb_center_slices[i], dst_corners_lrtb_center[i]);
 }
 
-void FedCanvas::fillPoly(const GPoint points[], int count, GShader* shader) {
+void DnkCanvas::fillPoly(const GPoint points[], int count, GShader* shader) {
     if (count <= 2)
         return;
 
     GPoint* xform_points = new GPoint[count];
-    FedMatrix3x3 ctm = getCTM();
+    DnkMatrix3x3 ctm = getCTM();
     ctm.apply(points, count, xform_points);
 
     shader->setContext(ctm.getFloats());
@@ -128,14 +128,14 @@ void FedCanvas::fillPoly(const GPoint points[], int count, GShader* shader) {
     int h  = m_bitmap.height();
     int rb = m_bitmap.rowBytes();
 
-    FedUtil::FedEdge* edges = new FedUtil::FedEdge[3*count];
-    int num_edges = FedUtil::pointsToEdges(xform_points, count, edges, w, h);
+    DnkUtil::DnkEdge* edges = new DnkUtil::DnkEdge[3*count];
+    int num_edges = DnkUtil::pointsToEdges(xform_points, count, edges, w, h);
 
-    std::sort(edges, edges + num_edges, FedUtil::byYThenX);
+    std::sort(edges, edges + num_edges, DnkUtil::byYThenX);
 
     int c = 0;
-    FedUtil::FedEdge left  = edges[c++];
-    FedUtil::FedEdge right = edges[c++];
+    DnkUtil::DnkEdge left  = edges[c++];
+    DnkUtil::DnkEdge right = edges[c++];
     int curr_y = left.top_y;
 
     GPixel* device = (GPixel*)((char*)(m_bitmap.pixels()) + curr_y * rb);
@@ -150,7 +150,7 @@ void FedCanvas::fillPoly(const GPoint points[], int count, GShader* shader) {
             int count = x1-x0;
             if (count > 0) {
                 shader->shadeRow(x0, curr_y, count, row);
-                FedUtil::blendRow(row, device + x0, count);
+                DnkUtil::blendRow(row, device + x0, count);
             }
 
             left.curr_x  += left.m;
@@ -175,42 +175,42 @@ void FedCanvas::fillPoly(const GPoint points[], int count, GShader* shader) {
     delete[] row;
 }
 
-FedMatrix3x3& FedCanvas::getCTM() {
+DnkMatrix3x3& DnkCanvas::getCTM() {
     return m_ctms.top();
 }
 
-void FedCanvas::fillConvexPolygon(const GPoint points[], int count, const GColor& color) {
+void DnkCanvas::fillConvexPolygon(const GPoint points[], int count, const GColor& color) {
     GShader* shader = GShader::FromColor(color);
     fillPoly(points, count, shader);
     delete shader;
 }
 
-void FedCanvas::save() {
+void DnkCanvas::save() {
     m_ctms.push(getCTM());
 }
 
-void FedCanvas::restore() {
+void DnkCanvas::restore() {
     if (!m_ctms.empty())
         m_ctms.pop();
 }
 
-void FedCanvas::concat(const float matrix[6]) {
-    getCTM() = getCTM() * FedMatrix3x3(matrix);
+void DnkCanvas::concat(const float matrix[6]) {
+    getCTM() = getCTM() * DnkMatrix3x3(matrix);
 }
 
-void FedCanvas::shadeRect(const GRect& rect, GShader* shader) {
+void DnkCanvas::shadeRect(const GRect& rect, GShader* shader) {
     if (!rect.isEmpty()) {
         GPoint pts[4];
-        FedUtil::convertToQuad(rect, pts);
+        DnkUtil::convertToQuad(rect, pts);
         shadeConvexPolygon(pts, 4, shader);
     }
 }
 
-void FedCanvas::shadeConvexPolygon(const GPoint points[], int count, GShader* shader) {
+void DnkCanvas::shadeConvexPolygon(const GPoint points[], int count, GShader* shader) {
     fillPoly(points, count, shader);
 }
 
-void FedCanvas::strokePolygon(const GPoint points[], int count, bool isClosed, const Stroke& stroke, GShader* shader) {
+void DnkCanvas::strokePolygon(const GPoint points[], int count, bool isClosed, const Stroke& stroke, GShader* shader) {
     if ((isClosed && count <= 2) || (count <= 1))
         return;
 
@@ -229,12 +229,12 @@ void FedCanvas::strokePolygon(const GPoint points[], int count, bool isClosed, c
         GPoint B = points[j];
         GPoint C = points[k];
 
-        FedVector2 AB(A, B);
+        DnkVector2 AB(A, B);
 
-        FedVector2 AB_scaled = AB.scaled(mag);
+        DnkVector2 AB_scaled = AB.scaled(mag);
 
-        FedVector2 AB_scaled_ccw = AB_scaled.rotate90ccw();
-        FedVector2 AB_scaled_cw  = AB_scaled.rotate90cw();
+        DnkVector2 AB_scaled_ccw = AB_scaled.rotate90ccw();
+        DnkVector2 AB_scaled_cw  = AB_scaled.rotate90cw();
 
         GPoint shell[4];
         shell[0] = A + AB_scaled_ccw;
@@ -251,8 +251,8 @@ void FedCanvas::strokePolygon(const GPoint points[], int count, bool isClosed, c
         }
         shadeConvexPolygon(shell, 4, shader);
 
-        FedVector2 BC(B, C);
-        FedVector2 BA(B, A);
+        DnkVector2 BC(B, C);
+        DnkVector2 BA(B, A);
 
         GPoint Q = shell[3];
         GPoint R = B + BC.scaled(mag).rotate90ccw();
@@ -262,8 +262,8 @@ void FedCanvas::strokePolygon(const GPoint points[], int count, bool isClosed, c
         joint[1] = B;
         joint[2] = R;
 
-        FedVector2 BQ(B, Q);
-        FedVector2 BR(B, R);
+        DnkVector2 BQ(B, Q);
+        DnkVector2 BR(B, R);
 
         float sgn = BA.crossmag(BC);
         if (sgn > 0) {
@@ -279,7 +279,7 @@ void FedCanvas::strokePolygon(const GPoint points[], int count, bool isClosed, c
             if (h_norm > stroke.fMiterLimit) {
                 shadeConvexPolygon(joint, 3, shader);
             } else {
-                FedVector2 BP = (BR + BQ).scaled(h_norm * mag);
+                DnkVector2 BP = (BR + BQ).scaled(h_norm * mag);
 
                 joint[3] = B + BP;
 

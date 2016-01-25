@@ -2,9 +2,9 @@
  * Copyright 2015 Federico Menozzi
  */
 
-#include "FedMatrix3x3.h"
+#include "DnkMatrix3x3.h"
 
-GPoint FedMatrix3x3::apply(const GPoint& point) const {
+GPoint DnkMatrix3x3::apply(const GPoint& point) const {
     float a = m_mat[0], b = m_mat[1], c = m_mat[2];
     float d = m_mat[3], e = m_mat[4], f = m_mat[5];
 
@@ -17,12 +17,12 @@ GPoint FedMatrix3x3::apply(const GPoint& point) const {
     return GPoint::Make(xp, yp);
 }
 
-void FedMatrix3x3::apply(const GPoint points[], int count, GPoint xform_points[]) const {
+void DnkMatrix3x3::apply(const GPoint points[], int count, GPoint xform_points[]) const {
     for (int i = 0; i < count; i++)
         xform_points[i] = apply(points[i]);
 }
 
-FedMatrix3x3 FedMatrix3x3::inv() const {
+DnkMatrix3x3 DnkMatrix3x3::inv() const {
     float res[6];
 
     float a = m_mat[0], b = m_mat[1], c = m_mat[2];
@@ -39,10 +39,10 @@ FedMatrix3x3 FedMatrix3x3::inv() const {
     res[4] = aebd_inv * a;
     res[5] = aebd_inv * (c*d - a*f);
 
-    return FedMatrix3x3(res);
+    return DnkMatrix3x3(res);
 }
 
-FedMatrix3x3 FedMatrix3x3::operator*(const FedMatrix3x3& other) const {
+DnkMatrix3x3 DnkMatrix3x3::operator*(const DnkMatrix3x3& other) const {
     float res[6];
 
     float a = m_mat[0], b = m_mat[1], c = m_mat[2];
@@ -58,10 +58,10 @@ FedMatrix3x3 FedMatrix3x3::operator*(const FedMatrix3x3& other) const {
     res[4] = d*h + e*k;
     res[5] = d*i + e*l + f;
 
-    return FedMatrix3x3(res);
+    return DnkMatrix3x3(res);
 }
 
-FedMatrix3x3& FedMatrix3x3::operator=(const FedMatrix3x3& other) {
+DnkMatrix3x3& DnkMatrix3x3::operator=(const DnkMatrix3x3& other) {
     if (this != &other) {
         for (int i = 0; i < 6; i++)
             m_mat[i] = other[i];
