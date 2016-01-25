@@ -2,18 +2,18 @@
  * Copyright 2015 Federico Menozzi
  */
 
-#ifndef DNKRADIALGRADIENTSHADER_H_
-#define DNKRADIALGRADIENTSHADER_H_
+#ifndef FEDRADIALGRADIENTSHADER_H_
+#define FEDRADIALGRADIENTSHADER_H_
 
 #include <GShader.h>
 #include <GPoint.h>
 #include <GColor.h>
 
-#include <DnkMatrix3x3.h>
+#include "FedMatrix3x3.h"
 
-class DnkRadialGradientShader : public GShader {
+class FedRadialGradientShader : public GShader {
 public:
-    DnkRadialGradientShader(const GPoint& center, float radius, const GColor colors[2]) {
+    FedRadialGradientShader(const GPoint& center, float radius, const GColor colors[2]) {
         m_center = center;
         m_radius = radius;
 
@@ -29,7 +29,7 @@ private:
     GPoint m_center;
     float  m_radius;
     GColor m_colors[2];
-    DnkMatrix3x3 m_xform;
+    FedMatrix3x3 m_xform;
 };
 
-#endif  // DNKRADIALGRADIENTSHADER_H_
+#endif  // FEDRADIALGRADIENTSHADER_H_

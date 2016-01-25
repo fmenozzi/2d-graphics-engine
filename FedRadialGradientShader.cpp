@@ -2,10 +2,10 @@
  * Copyright (2015) Federico Menozzi
  */
 
-#include <DnkRadialGradientShader.h>
-#include <DnkUtil.h>
+#include "FedRadialGradientShader.h"
+#include "FedUtil.h"
 
-bool DnkRadialGradientShader::setContext(const float ctm[6]) {
+bool FedRadialGradientShader::setContext(const float ctm[6]) {
     float r  = m_radius;
     float cx = m_center.x();
     float cy = m_center.y();
@@ -16,7 +16,7 @@ bool DnkRadialGradientShader::setContext(const float ctm[6]) {
         0, 0,  1,
     };
 
-    m_xform = (DnkMatrix3x3(ctm) * DnkMatrix3x3(local)).inv();
+    m_xform = (FedMatrix3x3(ctm) * FedMatrix3x3(local)).inv();
 
     return true;
 }
@@ -24,7 +24,7 @@ bool DnkRadialGradientShader::setContext(const float ctm[6]) {
 /*
  * TODO: Figure out how to forward difference t calculation
  */
-void DnkRadialGradientShader::shadeRow(int x, int y, int count, GPixel row[]) {
+void FedRadialGradientShader::shadeRow(int x, int y, int count, GPixel row[]) {
     GPoint start  = GPoint::Make(x+0.5, y+0.5);
     GPoint lookup = m_xform.apply(start);
 
@@ -35,10 +35,10 @@ void DnkRadialGradientShader::shadeRow(int x, int y, int count, GPixel row[]) {
     float d = m_xform[3];
 
     for (int i = 0; i < count; i++) {
-        float t = DnkUtil::clamp(0.0f, sqrtf(lookup.x()*lookup.x() + lookup.y()*lookup.y()), 1.0f);
-        GColor color = DnkUtil::lerp(c0, t, c1);
+        float t = FedUtil::clamp(0.0f, sqrtf(lookup.x()*lookup.x() + lookup.y()*lookup.y()), 1.0f);
+        GColor color = FedUtil::lerp(c0, t, c1);
 
-        row[i] = DnkUtil::toPixel(color);
+        row[i] = FedUtil::toPixel(color);
 
         lookup.fX += a;
         lookup.fY += d;

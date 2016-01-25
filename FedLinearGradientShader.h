@@ -2,19 +2,19 @@
  * Copyright 2015 Federico Menozzi
  */
 
-#ifndef DNKLINEARGRADIENTSHADER_H_
-#define DNKLINEARGRADIENTSHADER_H_
+#ifndef FEDLINEARGRADIENTSHADER_H_
+#define FEDLINEARGRADIENTSHADER_H_
 
 #include <GShader.h>
 #include <GPoint.h>
 #include <GColor.h>
 #include <GPixel.h>
 
-#include <DnkMatrix3x3.h>
+#include "FedMatrix3x3.h"
 
-class DnkLinearGradientShader : public GShader {
+class FedLinearGradientShader : public GShader {
 public:
-    DnkLinearGradientShader(const GPoint points[2], const GColor colors[2]);
+    FedLinearGradientShader(const GPoint points[2], const GColor colors[2]);
 
     bool setContext(const float ctm[6]) override;
 
@@ -24,9 +24,9 @@ private:
     GPoint m_points[2];
     GColor m_colors[2];
 
-    DnkMatrix3x3 m_xform;
+    FedMatrix3x3 m_xform;
 
     float m_D;
 };
 
-#endif  // DNKLINEARGRADIENTSHADER_H_
+#endif  // FEDLINEARGRADIENTSHADER_H_

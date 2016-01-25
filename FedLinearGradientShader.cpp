@@ -2,10 +2,10 @@
  * Copyright (2015) Federico Menozzi
  */
 
-#include <DnkLinearGradientShader.h>
-#include <DnkUtil.h>
+#include "FedLinearGradientShader.h"
+#include "FedUtil.h"
 
-DnkLinearGradientShader::DnkLinearGradientShader(const GPoint points[2], const GColor colors[2]) {
+FedLinearGradientShader::FedLinearGradientShader(const GPoint points[2], const GColor colors[2]) {
     m_points[0] = points[0];
     m_points[1] = points[1];
 
@@ -17,7 +17,7 @@ DnkLinearGradientShader::DnkLinearGradientShader(const GPoint points[2], const G
     m_D = sqrt(dx*dx + dy*dy);
 }
 
-bool DnkLinearGradientShader::setContext(const float ctm[6]) {
+bool FedLinearGradientShader::setContext(const float ctm[6]) {
     float p0x = m_points[0].x();
     float p0y = m_points[0].y();
 
@@ -30,12 +30,12 @@ bool DnkLinearGradientShader::setContext(const float ctm[6]) {
          0,   0,   1,
     };
 
-    m_xform = (DnkMatrix3x3(ctm) * DnkMatrix3x3(local)).inv();
+    m_xform = (FedMatrix3x3(ctm) * FedMatrix3x3(local)).inv();
 
     return true;
 }
 
-void DnkLinearGradientShader::shadeRow(int x, int y, int count, GPixel row[]) {
+void FedLinearGradientShader::shadeRow(int x, int y, int count, GPixel row[]) {
     GPoint start  = GPoint::Make(x+0.5, y+0.5);
     GPoint lookup = m_xform.apply(start);
 
@@ -46,10 +46,10 @@ void DnkLinearGradientShader::shadeRow(int x, int y, int count, GPixel row[]) {
     float d = m_xform[3];
 
     for (int i = 0; i < count; i++) {
-        float t = DnkUtil::clamp(0.0f, lookup.x(), 1.0f);
-        GColor color = DnkUtil::lerp(c0, t, c1);
+        float t = FedUtil::clamp(0.0f, lookup.x(), 1.0f);
+        GColor color = FedUtil::lerp(c0, t, c1);
 
-        row[i] = DnkUtil::toPixel(color);
+        row[i] = FedUtil::toPixel(color);
 
         lookup.fX += a;
         lookup.fY += d;

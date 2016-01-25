@@ -2,7 +2,7 @@
  * Copyright 2015 Federico Menozzi
  */
 
-#include "DnkUtil.h"
+#include "FedUtil.h"
 
 #include <GPixel.h>
 #include <GColor.h>
@@ -12,7 +12,7 @@
 
 #include <algorithm>
 
-namespace DnkUtil {
+namespace FedUtil {
 
 GPixel blend(GPixel src, GPixel dst) {
     static constexpr int magic = (1<<16) | (1<<8) | 1;
@@ -63,7 +63,7 @@ int numEdgesAfterClipping(GPoint p0, GPoint p1, int w) {
     return num_edges;
 }
 
-int pointsToEdges(const GPoint points[], int count, DnkEdge edges[], int w, int h) {
+int pointsToEdges(const GPoint points[], int count, FedEdge edges[], int w, int h) {
     int c = 0;
     for (int k = 1; k <= count; k++) {
         int i = k-1;
@@ -102,7 +102,7 @@ int pointsToEdges(const GPoint points[], int count, DnkEdge edges[], int w, int 
             int top_y  = p0.y() < p1.y() ? p0.y() : p1.y();
             int bot_y  = p0.y() > p1.y() ? p0.y() : p1.y();
             int curr_x = p0.x() < 0 ? 0 : w;
-            edges[c++] = DnkEdge(std::max(top_y, 0), std::min(bot_y, h), 0, curr_x);
+            edges[c++] = FedEdge(std::max(top_y, 0), std::min(bot_y, h), 0, curr_x);
             continue;
         }
 
@@ -114,7 +114,7 @@ int pointsToEdges(const GPoint points[], int count, DnkEdge edges[], int w, int 
             if (top_y != bot_y) {
                 float m      = (p1.x() - p0.x()) / (p1.y() - p0.y());
                 float curr_x = p0.x() + m * (top_y+0.5 - p0.y());
-                edges[c++]   = DnkEdge(top_y, bot_y, m, curr_x);
+                edges[c++]   = FedEdge(top_y, bot_y, m, curr_x);
             }
         } else if (edges_after_clipping == 2) {
             if (p0.x() < 0) {
@@ -127,7 +127,7 @@ int pointsToEdges(const GPoint points[], int count, DnkEdge edges[], int w, int 
                 // Projected edge
                 int top_y  = GRoundToInt(proj.y() < clip.y() ? proj.y() : clip.y());
                 int bot_y  = GRoundToInt(proj.y() > clip.y() ? proj.y() : clip.y());
-                edges[c++] = DnkEdge(top_y, bot_y, 0, 0);
+                edges[c++] = FedEdge(top_y, bot_y, 0, 0);
 
                 // Clipped edge (check not horizontal)
                 top_y = GRoundToInt(clip.y() < p1.y() ? clip.y() : p1.y());
@@ -136,7 +136,7 @@ int pointsToEdges(const GPoint points[], int count, DnkEdge edges[], int w, int 
                     float m      = (clip.x() - p1.x()) / (clip.y() - p1.y());
                     float curr_x = clip.y() < p1.y() ? clip.x() : p1.x();
                     curr_x       = curr_x + m * (top_y+0.5 - (clip.y() < p1.y() ? clip.y() : p1.y()));
-                    edges[c++]   = DnkEdge(top_y, bot_y, m, curr_x);
+                    edges[c++]   = FedEdge(top_y, bot_y, m, curr_x);
                 }
             } else {  // p1.x() > w
                 GPoint proj = GPoint::Make(w, p1.y());
@@ -148,7 +148,7 @@ int pointsToEdges(const GPoint points[], int count, DnkEdge edges[], int w, int 
                 // Projected edge
                 int top_y  = GRoundToInt(proj.y() < clip.y() ? proj.y() : clip.y());
                 int bot_y  = GRoundToInt(proj.y() > clip.y() ? proj.y() : clip.y());
-                edges[c++] = DnkEdge(top_y, bot_y, 0, w);
+                edges[c++] = FedEdge(top_y, bot_y, 0, w);
 
                 // Clipped edge (check not horizontal)
                 top_y = GRoundToInt(clip.y() < p0.y() ? clip.y() : p0.y());
@@ -157,7 +157,7 @@ int pointsToEdges(const GPoint points[], int count, DnkEdge edges[], int w, int 
                     float m      = (clip.x() - p1.x()) / (clip.y() - p1.y());
                     float curr_x = clip.y() < p0.y() ? clip.x() : p0.x();
                     curr_x       = curr_x + m * (top_y+0.5 - (clip.y() < p0.y() ? clip.y() : p0.y()));
-                    edges[c++]   = DnkEdge(top_y, bot_y, m, curr_x);
+                    edges[c++]   = FedEdge(top_y, bot_y, m, curr_x);
                 }
             }
         } else {  // edges_after_clipping == 3
@@ -175,7 +175,7 @@ int pointsToEdges(const GPoint points[], int count, DnkEdge edges[], int w, int 
             // Left projected edge
             int top_y  = GRoundToInt(leftproj.y() < leftclip.y() ? leftproj.y() : leftclip.y());
             int bot_y  = GRoundToInt(leftproj.y() > leftclip.y() ? leftproj.y() : leftclip.y());
-            edges[c++] = DnkEdge(top_y, bot_y, 0, 0);
+            edges[c++] = FedEdge(top_y, bot_y, 0, 0);
 
             // Interior edge
             top_y = GRoundToInt(leftclip.y() < rightclip.y() ? leftclip.y() : rightclip.y());
@@ -184,19 +184,19 @@ int pointsToEdges(const GPoint points[], int count, DnkEdge edges[], int w, int 
                 float m      = (leftclip.x() - rightclip.x()) / (leftclip.y() - rightclip.y());
                 float curr_x = leftclip.y() < rightclip.y() ? leftclip.x() : rightclip.x();
                 curr_x       = curr_x + m * (top_y+0.5 - (leftclip.y() < rightclip.y() ? leftclip.y() : rightclip.y()));
-                edges[c++]   = DnkEdge(top_y, bot_y, m, curr_x);
+                edges[c++]   = FedEdge(top_y, bot_y, m, curr_x);
             }
 
             // Right projected edge
             top_y = GRoundToInt(rightproj.y() < rightclip.y() ? rightproj.y() : rightclip.y());
             bot_y = GRoundToInt(rightproj.y() > rightclip.y() ? rightproj.y() : rightclip.y());
-            edges[c++] = DnkEdge(top_y, bot_y, 0, w);
+            edges[c++] = FedEdge(top_y, bot_y, 0, w);
         }
     }
     return c;
 }
 
-bool byYThenX(DnkEdge a, DnkEdge b) {
+bool byYThenX(FedEdge a, FedEdge b) {
     if (a.top_y == b.top_y) {
         float a_mid_x = a.curr_x + a.m/2 * (a.bot_y - a.top_y);
         float b_mid_x = b.curr_x + b.m/2 * (b.bot_y - b.top_y);
@@ -212,7 +212,7 @@ void convertToQuad(const GRect& rect, GPoint pts[4]) {
     pts[3] = GPoint::Make(rect.right(), rect.top());
 }
 
-DnkMatrix3x3 mapRectToRectMat(const GRect& src, const GRect& dst) {
+FedMatrix3x3 mapRectToRectMat(const GRect& src, const GRect& dst) {
     float res[6];
 
     float t1x = -src.left();
@@ -232,7 +232,7 @@ DnkMatrix3x3 mapRectToRectMat(const GRect& src, const GRect& dst) {
     res[4] = sy;
     res[5] = t1y*sy + t2y;
 
-    return DnkMatrix3x3(res);
+    return FedMatrix3x3(res);
 }
 
 void blendRow(const GPixel src[], GPixel dst[], int count) {
@@ -293,4 +293,4 @@ void divideIntoNine(const GBitmap& src, const GIRect& center, const GRect& dst, 
     corners_lrtb_center[8] = GRect::MakeXYWH(cx, cy, cw, ch);
 }
 
-}  // namespace DnkUtil
+}  // namespace FedUtil

@@ -2,20 +2,20 @@
  * Copyright 2015 Federico Menozzi
  */
 
-#include <DnkLerpShader.h>
+#include "FedLerpShader.h"
 
 #include <GColor.h>
 
-bool DnkLerpShader::setContext(const float ctm[6]) {
+bool FedLerpShader::setContext(const float ctm[6]) {
     m_a->setContext(ctm);
     m_b->setContext(ctm);
 
-    m_xform = DnkMatrix3x3(ctm).inv();
+    m_xform = FedMatrix3x3(ctm).inv();
 
     return true;
 }
 
-void DnkLerpShader::shadeRow(int x, int y, int count, GPixel row[]) {
+void FedLerpShader::shadeRow(int x, int y, int count, GPixel row[]) {
     GPoint start  = GPoint::Make(x+0.5, y+0.5);
     GPoint lookup = m_xform.apply(start);
 
@@ -31,12 +31,12 @@ void DnkLerpShader::shadeRow(int x, int y, int count, GPixel row[]) {
     m_b->shadeRow(x, y, count, brow);
 
     for (int i = 0; i < count; i++) {
-        GColor ca = DnkUtil::toColor(arow[i]);
-        GColor cb = DnkUtil::toColor(brow[i]);
+        GColor ca = FedUtil::toColor(arow[i]);
+        GColor cb = FedUtil::toColor(brow[i]);
 
-        GColor color = DnkUtil::lerp(ca, t, cb);
+        GColor color = FedUtil::lerp(ca, t, cb);
 
-        row[i] = DnkUtil::toPixel(color);
+        row[i] = FedUtil::toPixel(color);
 
         lookup.fX += a;
         lookup.fY += d;

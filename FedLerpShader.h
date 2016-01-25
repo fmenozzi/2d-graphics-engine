@@ -2,22 +2,22 @@
  * Copyright 2015 Federico Menozzi
  */
 
-#ifndef DNKLERPSHADER_H_
-#define DNKLERPSHADER_H_
+#ifndef FEDLERPSHADER_H_
+#define FEDLERPSHADER_H_
 
 #include <GShader.h>
 #include <GPixel.h>
 
-#include <DnkMatrix3x3.h>
-#include <DnkUtil.h>
+#include "FedMatrix3x3.h"
+#include "FedUtil.h"
 
-class DnkLerpShader : public GShader {
+class FedLerpShader : public GShader {
 public:
-    DnkLerpShader(GShader* a, GShader* b, float t) {
+    FedLerpShader(GShader* a, GShader* b, float t) {
         m_a = a;
         m_b = b;
 
-        m_t = DnkUtil::clamp(0.0f, t, 1.0f);
+        m_t = FedUtil::clamp(0.0f, t, 1.0f);
     }
 
     bool setContext(const float ctm[6]) override;
@@ -30,7 +30,7 @@ private:
 
     float m_t;
 
-    DnkMatrix3x3 m_xform;
+    FedMatrix3x3 m_xform;
 };
 
-#endif  // DNKLERPSHADER_H_
+#endif  // FEDLERPSHADER_H_
